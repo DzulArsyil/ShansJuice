@@ -1,1 +1,216 @@
 @import "tailwindcss";
+
+@theme {
+  /* ——— Shans Juice design tokens ——— */
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f5f2e7;      /* warm fresh-paper background */
+  --color-cream: #fbf9f0;      /* card surface */
+  --color-ink: #1f2b21;        /* deep green-black text */
+  --color-pine: #17352a;       /* dark sections / footer */
+  --color-pine-soft: #1f4534;  /* dark hover */
+  --color-leaf: #2e5b3f;       /* primary green */
+  --color-mango: #f5a524;      /* juicy accent */
+  --color-mango-deep: #d98c0a;
+  --color-berry: #d9503a;      /* sticker-red pop */
+  --color-matcha: #dde5c6;     /* soft green chip */
+  --color-milk: #f3ead6;       /* soft cream chip */
+  --color-line: #e3ddc8;       /* borders */
+  --color-mute: #6d7566;       /* muted text */
+  --color-wa: #1f9d55;         /* WhatsApp action */
+  --color-wa-deep: #187e44;
+
+  --shadow-lift: 0 12px 32px -12px rgb(31 43 33 / 0.22);
+  --shadow-card: 0 2px 10px -2px rgb(31 43 33 / 0.1), 0 12px 28px -18px rgb(31 43 33 / 0.28);
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-spin-slow: spinSlow 22s linear infinite;
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-pulse-dot: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--tilt, 0deg)); }
+}
+@keyframes pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(31 157 85 / 0.5); }
+  60% { box-shadow: 0 0 0 7px rgb(31 157 85 / 0); }
+}
+@keyframes riseLine {
+  from { transform: translateY(112%); }
+  to { transform: translateY(0); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-mango);
+  color: var(--color-ink);
+}
+
+/* ——— focus visibility ——— */
+:focus-visible {
+  outline: 3px solid var(--color-mango);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ——— grain overlay (film texture) ——— */
+.noise-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* ——— hero line-mask reveal ——— */
+.mask-line {
+  display: block;
+  overflow: hidden;
+}
+.mask-line > span {
+  display: block;
+  transform: translateY(112%);
+  animation: riseLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* ——— scroll reveal ——— */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--rd, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ——— outline display text ——— */
+.text-hollow {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--color-ink);
+}
+.text-hollow-light {
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(251 249 240 / 0.9);
+}
+
+/* ——— marquee ——— */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: var(--animate-marquee);
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ——— slow zoom on hover ——— */
+.kb-frame {
+  overflow: hidden;
+}
+.kb-frame img {
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.kb-frame:hover img,
+.kb-frame:focus-within img {
+  transform: scale(1.07) rotate(0.6deg);
+}
+
+/* ——— dotted fruit-crate paper pattern ——— */
+.dot-grid {
+  background-image: radial-gradient(rgb(31 43 33 / 0.09) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.dot-grid-light {
+  background-image: radial-gradient(rgb(251 249 240 / 0.14) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* ——— squiggle underline for accent words ——— */
+.squiggle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 Q 12 2 22 8 T 42 8 T 62 8 T 82 8 T 102 8 T 122 8' fill='none' stroke='%23F5A524' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.32em;
+  padding-bottom: 0.18em;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ticket-edge dashed ring used on stickers */
+.sticker-ring {
+  border: 2px dashed currentColor;
+}
+
+/* ——— reduced motion: calm everything down ——— */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .mask-line > span {
+    animation: none;
+    transform: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .kb-frame img {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+  }
+}

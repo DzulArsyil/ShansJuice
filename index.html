@@ -1,97 +1,73 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>coder-app-name</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    <title>Shans Juice Karawang — Juice Segar, Kopi & Camilan di Karawang Kulon</title>
+    <meta
+      name="description"
+      content="Shans Juice Karawang: mango thai, strawberry thai, aren milk regal, kopi, indomie nyemek, dimsum mentai & camilan. Buka setiap hari 10.00–00.00. Pesan via WhatsApp atau mampir di Karawang Kulon."
     />
-    <style>
-      /* 内联样式确保主题色立即生效，避免闪烁 */
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-      }
-      html.light,
-      html.light body {
-        background-color: #ffffff !important;
-        color: #000000;
-      }
-      html.dark,
-      html.dark body {
-        background-color: #1a1a1a !important;
-        color: #ffffff;
-      }
-    </style>
-    <script>
-      // 在 React 加载前立即设置主题，避免闪烁
-      (function () {
-        const isInIframe = window.self !== window.top;
+    <meta name="theme-color" content="#17352A" />
+    <link rel="canonical" href="https://shansjuice.id/" />
 
-        function applyThemeToDOM(theme) {
-          document.documentElement.classList.remove("light", "dark");
-          document.documentElement.classList.add(theme);
-          document.documentElement.setAttribute("data-theme", theme);
-        }
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shans Juice" />
+    <meta property="og:title" content="Shans Juice Karawang — Segarnya Bikin Balik Lagi" />
+    <meta
+      property="og:description"
+      content="Juice buah beneran, kopi susu, indomie nyemek, sampai dimsum mentai. Nongkrong santai di Karawang Kulon atau pesan via WhatsApp."
+    />
+    <meta
+      property="og:image"
+      content="https://image.qwenlm.ai/generated-images/3857bb4c-c1c1-4d3c-a8f5-5f28978493c5/_result.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
 
-        if (isInIframe) {
-          // 监听父窗口主动推送的主题消息
-          window.addEventListener("message", function (event) {
-            if (event.data && typeof event.data.theme === "string") {
-              const theme = event.data.theme;
-              if (theme === "light" || theme === "dark") {
-                applyThemeToDOM(theme);
-              }
-            }
-          });
-        } else {
-          // 非 iframe 环境，使用默认 light 主题
-          applyThemeToDOM("light");
-        }
-      })();
-    </script>
-      <script>
-      (function () {
-        if (window.self === window.top) return;
-        var reported = {};
-        window.addEventListener("error", function (event) {
-          // 资源加载失败的 error 事件没有 message，此处仅上报 JS 运行时错误
-          if (!event || !event.message) return;
-          var key =
-            event.message + "|" + (event.filename || "") + "|" + (event.lineno || 0);
-          if (reported[key]) return; // 相同错误只上报一次，避免渲染循环刷屏
-          reported[key] = true;
-          try {
-            window.parent.postMessage(
-              {
-                type: "sandbox-runtime-error",
-                payload: {
-                  message: String(event.message).slice(0, 500),
-                  filename: event.filename || "",
-                  lineno: event.lineno || 0,
-                  colno: event.colno || 0,
-                  stack:
-                    event.error && event.error.stack
-                      ? String(event.error.stack).slice(0, 2000)
-                      : ""
-                }
-              },
-              "*"
-            );
-          } catch (e) {
-            /* 上报失败不影响页面运行 */
-          }
-        });
-      })();
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts: Bricolage Grotesque (display) + Plus Jakarta Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://image.qwenlm.ai" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- LocalBusiness structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FoodEstablishment",
+        "name": "Shans Juice",
+        "description": "Kedai juice, kopi, dan camilan di Karawang Kulon. Mango thai, strawberry thai, aren milk regal, indomie, dimsum, dan dessert. Buka setiap hari 10.00–00.00.",
+        "telephone": "+6285888888252",
+        "servesCuisine": ["Juice", "Coffee", "Indonesian Snacks"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Jl. Anjun Kanoman, Karawang Kulon, Kec. Karawang Barat",
+          "addressLocality": "Karawang",
+          "addressRegion": "Jawa Barat",
+          "postalCode": "41311",
+          "addressCountry": "ID"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+          ],
+          "opens": "10:00",
+          "closes": "23:59"
+        },
+        "sameAs": ["https://www.instagram.com/shansjuice"],
+        "hasMap": "https://maps.app.goo.gl/bPsjjqBL3RUhVsjSA"
+      }
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
